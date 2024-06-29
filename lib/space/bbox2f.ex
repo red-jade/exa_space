@@ -108,17 +108,17 @@ defmodule Exa.Space.BBox2f do
       Pos2f.equals?({xmax1, ymax1}, {xmax2, ymax2}, eps)
   end
 
-  @spec area(S.bbox2f()) :: float()
-  def area({xmin, ymin, xmax, ymax}), do: (xmax - xmin) * (ymax - ymin)
-
+  @doc "Convert the BBox to the minimum corner position, width and height."
   @spec to_pos_dims(S.bbox2f()) :: {S.pos2f(), {E.pos_float(), E.pos_float()}}
   def to_pos_dims({xmin, ymin, xmax, ymax}), do: {{xmin, ymin}, {xmax - xmin, ymax - ymin}}
 
+  @doc "Convert the BBox to a center position, width and height."
   @spec to_center_dims(S.bbox2f()) :: {S.pos2f(), {E.pos_float(), E.pos_float()}}
   def to_center_dims({xmin, ymin, xmax, ymax}) do
     {{(xmin + xmax) / 2, (ymin + ymax) / 2}, {xmax - xmin, ymax - ymin}}
   end
 
+  @doc "Convert the min and max corners to positions."
   @spec to_pos2f(S.bbox2f()) :: {S.pos2f(), S.pos2f()}
   def to_pos2f({xmin1, ymin1, xmax1, ymax1}) do
     {{xmin1, ymin1}, {xmax1, ymax1}}
@@ -128,12 +128,29 @@ defmodule Exa.Space.BBox2f do
   @spec coords2f(S.bbox2f()) :: S.coords2f()
   def coords2f({x1, y1, x2, y2}), do: [{x1, y1}, {x2, y1}, {x2, y2}, {x1, y2}]
 
+  @doc "Get the area of the BBox."
+  @spec area(S.bbox2f()) :: E.pos_float()
+  def area({xmin, ymin, xmax, ymax}), do: (xmax - xmin) * (ymax - ymin)
+
   @doc "Get the bounding box that covers both the arguments."
   @spec union(S.bbox2f(), S.bbox2f()) :: S.bbox2f()
   def union({xmin1, ymin1, xmax1, ymax1}, {xmin2, ymin2, xmax2, ymax2}) do
     {min(xmin1, xmin2), min(ymin1, ymin2), max(xmax1, xmax2), max(ymax1, ymax2)}
   end
 
+  @doc """
+  Get the intersection of two bounding boxes.
+
+  The result is either a valid bbox, or a reason for error:
+  - degenerate: the bboxes overlap just at a corner or edge, within epsilon
+  - error: the bboxes do not overlap, 
+    they are more than epsilon away from each other
+  """
+  @spec intersect(S.bbox2f(), S.bbox2f()) :: bbox2f_type()
+  def intersect({xmin1, ymin1, xmax1, ymax1}, {xmin2, ymin2, xmax2, ymax2}, eps \\ @epsilon) do
+    new(max(xmin1, xmin2), max(ymin1, ymin2), min(xmax1, xmax2), min(ymax1, ymax2), eps)
+  end
+  
   @doc "Test the relation of a point to the bounding box."
   @spec classify(S.bbox2f(), S.pos2f(), E.epsilon()) :: S.in_shape2d()
   def classify({xmin, ymin, xmax, ymax}, {x, y}, eps \\ @epsilon) when is_eps(eps) do
@@ -170,18 +187,5 @@ defmodule Exa.Space.BBox2f do
       Math.compare(x, xmax, eps) != :above and
       Math.compare(y, ymin, eps) != :below and
       Math.compare(y, ymax, eps) != :above
-  end
-
-  @doc """
-  Get the intersection of two bounding boxes.
-
-  The result is either a valid bbox, or a reason for error:
-  - degenerate: the bboxes overlap just at a corner or edge, within epsilon
-  - error: the bboxes do not overlap, 
-    they are more than epsilon away from each other
-  """
-  @spec intersect(S.bbox2f(), S.bbox2f()) :: bbox2f_type()
-  def intersect({xmin1, ymin1, xmax1, ymax1}, {xmin2, ymin2, xmax2, ymax2}, eps \\ @epsilon) do
-    new(max(xmin1, xmin2), max(ymin1, ymin2), min(xmax1, xmax2), min(ymax1, ymax2), eps)
   end
 end

@@ -12,6 +12,7 @@ defmodule Exa.Gfx.Space.Pos3f do
   # constants
   # ---------
 
+  @doc "The 3D float origin zero point."
   @spec origin() :: S.pos3f()
   def origin(), do: {0.0, 0.0, 0.0}
 
@@ -19,6 +20,7 @@ defmodule Exa.Gfx.Space.Pos3f do
   # constructor
   # -----------
 
+  @doc "Create a new 3D float position from 3 numbers."
   @spec new(number(), number(), number()) :: S.pos3f()
 
   def new(x, y, z) when is_float(x) and is_float(y) and is_float(z),
@@ -31,12 +33,15 @@ defmodule Exa.Gfx.Space.Pos3f do
   # accessors
   # ---------
 
+  @doc "Get the x coordinate."
   @spec x(S.pos3f()) :: float()
   def x({x, _, _}), do: x
 
+  @doc "Get the y coordinate."
   @spec y(S.pos3f()) :: float()
   def y({_, y, _}), do: y
 
+  @doc "Get the z coordinate."
   @spec z(S.pos3f()) :: float()
   def z({_, _, z}), do: z
 
@@ -51,10 +56,10 @@ defmodule Exa.Gfx.Space.Pos3f do
   end
 
   @doc "Move a point by a vector."
-  @spec move(S.pos3f(), S.vec3f()) :: S.pos3f()
+  @spec move(pos :: S.pos3f(), vec :: S.vec3f()) :: S.pos3f()
   def move({x, y, z}, {dx, dy, dz}), do: {x + dx, y + dy, z + dz}
 
-  @doc "Get the vector between two points."
-  @spec diff(S.pos3f(), S.pos3f()) :: S.vec3f()
+  @doc "Get the vector between two points (P2 - P1)."
+  @spec diff(p1 :: S.pos3f(), p2 :: S.pos3f()) :: S.vec3f()
   def diff({x1, y1, z1}, {x2, y2, z2}), do: {x2 - x1, y2 - y1, z2 - z1}
 end

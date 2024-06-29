@@ -31,7 +31,7 @@ defmodule Exa.Space.BBox1i do
     end
   end
 
-  @doc "Get the bounding box of a minimum value and a length."
+  @doc "Get the bounding box of a minimum value and a width."
   @spec from_pos_w(integer(), S.dim()) :: S.bbox1i()
   def from_pos_w(i, w) when is_integer(i) and is_dim(w) do
     {i, i + w - 1}
@@ -57,9 +57,11 @@ defmodule Exa.Space.BBox1i do
   # accessors
   # ---------
 
+  @doc "Get the minimum i value."
   @spec imin(S.bbox1i()) :: integer()
   def imin({imin, _}), do: imin
 
+  @doc "Get the maximum i value."
   @spec imax(S.bbox1i()) :: integer()
   def imax({_, imax}), do: imax
 
@@ -67,12 +69,11 @@ defmodule Exa.Space.BBox1i do
   # public methods
   # --------------
 
-  # equals? use ==
-
+  @doc "Get the width (i dimension)."
   @spec width(S.bbox1i()) :: integer()
   def width({imin, imax}), do: imax - imin + 1
 
-  @doc "Get the bounding box as point and width."
+  @doc "Get the bounding box as minimum point and width (i dimension)."
   @spec to_pos_w(S.bbox1i()) :: {integer(), S.dim()}
   def to_pos_w({imin, imax}), do: {imin, imax - imin + 1}
 

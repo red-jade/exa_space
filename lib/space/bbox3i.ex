@@ -54,21 +54,27 @@ defmodule Exa.Space.BBox3i do
   # accessors
   # ---------
 
+  @doc "Get the minimum i value."
   @spec imin(S.bbox3i()) :: integer()
   def imin({imin, _, _, _, _, _}), do: imin
 
+  @doc "Get the minimum j value."
   @spec jmin(S.bbox3i()) :: integer()
   def jmin({_, jmin, _, _, _, _}), do: jmin
 
+  @doc "Get the minimum k value."
   @spec kmin(S.bbox3i()) :: integer()
   def kmin({_, _, kmin, _, _, _}), do: kmin
 
+  @doc "Get the maximum i value."
   @spec imax(S.bbox3i()) :: integer()
   def imax({_, _, _, imax, _, _}), do: imax
 
+  @doc "Get the maximum j value."
   @spec jmax(S.bbox3i()) :: integer()
   def jmax({_, _, _, _, jmax, _}), do: jmax
 
+  @doc "Get the maximum k value."
   @spec kmax(S.bbox3i()) :: integer()
   def kmax({_, _, _, _, _, kmax}), do: kmax
 
@@ -76,9 +82,7 @@ defmodule Exa.Space.BBox3i do
   # public methods
   # --------------
 
-  # equals? use ==
-
-  @doc "Get the integral volume of the bounding box."
+  @doc "Get the integer volume of the bounding box."
   @spec volume(S.bbox3i()) :: integer()
   def volume({imin, jmin, kmin, imax, jmax, kmax}) do
     (imax - imin + 1) * (jmax - jmin + 1) * (kmax - kmin + 1)

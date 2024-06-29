@@ -21,9 +21,7 @@ For example, `pos2i` is a 2D position coordinate on an integr grid.
 The design prefers plain (untagged) tuples
 for compact size and efficient O(1) access time (contiguous in memory).
 
-Positions, vectors and bounding boxes use tuples.
-
-Matrix transforms use tuples-of-tuples.
+Positions, vectors, bounding boxes and matrix transforms use tuples.
 
 Generalized transforms (translate, rotate, scale, full matrix)
 use tagged tuples to distinguish the various elements.
@@ -41,5 +39,5 @@ use tagged tuples to distinguish the various elements.
 
 EXA source code is released under the MIT license.
 
-EXA code and documentation are:
+EXA code and documentation are:<br>
 Copyright (c) 2024 Mike French

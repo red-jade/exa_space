@@ -98,63 +98,76 @@ defmodule Exa.Space.Types do
   # positions
   # ---------
 
+  @typedoc "2D position with integer coordinates."
   @type pos2i() :: {integer(), integer()}
   defguard is_pos2i(p)
            when is_fix_tuple(p, 2) and
                   is_integer(elem(p, 0)) and is_integer(elem(p, 1))
 
+  @typedoc "List of 2D integer coordinates."
   @type coords2i() :: [pos2i(), ...]
   defguard is_coords2i(cs) when is_list(cs) and cs != [] and is_pos2i(hd(cs))
 
+  @typedoc "List of 3D integer coordinates."
   @type pos3i() :: {integer(), integer(), integer()}
   defguard is_pos3i(p)
            when is_fix_tuple(p, 3) and
                   is_integer(elem(p, 0)) and is_integer(elem(p, 1)) and is_integer(elem(p, 2))
 
+  @typedoc "3D position with integer coordinates."
   @type coords3i() :: [pos3i(), ...]
   defguard is_coords3i(cs) when is_list(cs) and cs != [] and is_pos3i(hd(cs))
 
+  @typedoc "2D position with float coordinates."
   @type pos2f() :: {float(), float()}
   defguard is_pos2f(p)
            when is_fix_tuple(p, 2) and
                   is_float(elem(p, 0)) and is_float(elem(p, 1))
 
+  @typedoc "List of 2D float coordinates."
   @type coords2f() :: [pos2f(), ...]
   defguard is_coords2f(cs) when is_list(cs) and cs != [] and is_pos2f(hd(cs))
 
+  @typedoc "3D position with float coordinates."
   @type pos3f() :: {float(), float(), float()}
   defguard is_pos3f(v)
            when is_fix_tuple(v, 3) and
                   is_float(elem(v, 0)) and is_float(elem(v, 1)) and is_float(elem(v, 2))
 
+  @typedoc "List of 3D float coordinates."
+  @type coords3f() :: [pos3f(), ...]
+  defguard is_coords3f(cs) when is_list(cs) and cs != [] and is_pos3f(hd(cs))
+
+  @typedoc "4D position with float coordinates."
   @type pos4f() :: {float(), float(), float(), float()}
   defguard is_pos4f(v)
            when is_fix_tuple(v, 4) and
                   is_float(elem(v, 0)) and is_float(elem(v, 1)) and
                   is_float(elem(v, 2)) and is_float(elem(v, 3))
 
-  @type coords3f() :: [pos3f(), ...]
-  defguard is_coords3f(cs) when is_list(cs) and cs != [] and is_pos3f(hd(cs))
-
   # -------
   # vectors
   # -------
 
+  @typedoc "2D vector with integer components."
   @type vec2i() :: {integer(), integer()}
   defguard is_vec2i(v)
            when is_fix_tuple(v, 2) and
                   is_integer(elem(v, 0)) and is_integer(elem(v, 1))
 
+  @typedoc "2D vector with float components."
   @type vec2f() :: {float(), float()}
   defguard is_vec2f(v)
            when is_fix_tuple(v, 2) and
                   is_float(elem(v, 0)) and is_float(elem(v, 1))
 
+  @typedoc "3D vector with float components."
   @type vec3f() :: {float(), float(), float()}
   defguard is_vec3f(v)
            when is_fix_tuple(v, 3) and
                   is_float(elem(v, 0)) and is_float(elem(v, 1)) and is_float(elem(v, 2))
 
+  @typedoc "4D vector with float components."
   @type vec4f() :: {float(), float(), float(), float()}
   defguard is_vec4f(v)
            when is_fix_tuple(v, 4) and
@@ -165,12 +178,14 @@ defmodule Exa.Space.Types do
   # bounding box
   # ------------
 
+  @typedoc "1D bounding box with integer components."
   @type bbox1i() :: {integer(), integer()}
   defguard is_bbox1i(v)
            when is_fix_tuple(v, 2) and
                   is_integer(elem(v, 0)) and is_integer(elem(v, 1)) and
                   elem(v, 0) <= elem(v, 1)
 
+  @typedoc "2D bounding box with integer components."
   @type bbox2i() :: {integer(), integer(), integer(), integer()}
   defguard is_bbox2i(v)
            when is_fix_tuple(v, 4) and
@@ -179,6 +194,7 @@ defmodule Exa.Space.Types do
                   elem(v, 0) <= elem(v, 2) and
                   elem(v, 1) <= elem(v, 3)
 
+  @typedoc "3D bounding box with integer components."
   @type bbox3i() :: {integer(), integer(), integer(), integer(), integer(), integer()}
   defguard is_bbox3i(v)
            when is_fix_tuple(v, 6) and
@@ -189,6 +205,7 @@ defmodule Exa.Space.Types do
                   elem(v, 1) <= elem(v, 4) and
                   elem(v, 2) <= elem(v, 5)
 
+  @typedoc "2D bounding box with float components."
   @type bbox2f() :: {float(), float(), float(), float()}
   defguard is_bbox2f(v)
            when is_fix_tuple(v, 4) and
@@ -200,12 +217,12 @@ defmodule Exa.Space.Types do
   # matrix transforms
   # -----------------
 
-  @typedoc "A 2D array of values in row-major order."
+  @typedoc "A 2x2 array of values in row-major order."
   @type mat22() :: :iden22 | {float(), float(), float(), float()}
 
   defguard is_mat22(m) when m == :iden22 or is_fix_tuple(m, 4)
 
-  @typedoc "A 3D array of values in row-major order."
+  @typedoc "A 3x3 array of values in row-major order."
   @type mat33() ::
           :iden33
           | {
@@ -222,7 +239,7 @@ defmodule Exa.Space.Types do
 
   defguard is_mat33(m) when m == :iden33 or is_fix_tuple(m, 9)
 
-  @typedoc "A 4D array of values in row-major order."
+  @typedoc "A 4x4 array of values in row-major order."
   @type mat44() ::
           :iden44
           | {
@@ -254,18 +271,38 @@ defmodule Exa.Space.Types do
   # part transforms
   # ---------------
 
+  # 2D transforms
+
+  @typedoc "2D translation xform expressed using a vector."
   @type xlate2d() :: vec2f()
+
+  @typedoc "2D scaling xform expressed using one or two scale factors."
   @type scale2d() :: float() | {float(), float()}
+
+  @typedoc "2D skew shear xform expressed using one or two scale factors."
   @type skew2d() :: float() | {float(), float()}
+
+  @typedoc "2D rotation xform expressed using float degrees."
   @type rotate2d() :: E.degrees()
 
+  @typedoc "2D transform expressed as a 3x3 matrix or list of simple 2D xforms."
   @type transform2d() :: {:matrix2, mat33()} | {:trans2, xlate2d(), rotate2d(), scale2d()}
 
+  # 3D transforms
+
+  @typedoc "3D translation xform expressed using a vector."
   @type xlate3d() :: vec3f()
+
+  @typedoc "3D scaling xform expressed using one or two scale factors."
   @type scale3d() :: float() | {float(), float(), float()}
+
+  @typedoc "3D skew shear xform expressed using one or two scale factors."
   @type skew3d() :: float() | {float(), float(), float()}
+
+  @typedoc "3D rotation xform expressed using axis vector and float degrees (RH)."
   @type rotate3d() :: {E.degrees(), vec3f()}
 
+  @typedoc "3D transform expressed as a 4x4 matrix or list of simple 3D xforms."
   @type transform3d() :: {:matrix3, mat44()} | {:trans3, xlate2d(), rotate2d(), scale2d()}
 
   # ----------------

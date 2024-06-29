@@ -277,6 +277,7 @@ defmodule Exa.Space.Xform do
   def trace(m) when is_mat33(m), do: elem(m,0) + elem(m,4) + elem(m,8) 
   def trace(m) when is_mat44(m), do: elem(m,0) + elem(m,5) + elem(m,10) + elem(m,15)
 
+  @doc "Compare two matrices for equality (within tolerance)."
   @spec equals?(S.matrix(), S.matrix(), E.epsilon()) :: bool()
   def equals?(a, b, eps \\ @epsilon)
   def equals?(:iden22, :iden22, _), do: true

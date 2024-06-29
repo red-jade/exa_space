@@ -53,15 +53,19 @@ defmodule Exa.Space.BBox2i do
   # accessors
   # ---------
 
+  @doc "Get the minimum i value."
   @spec imin(S.bbox2i()) :: integer()
   def imin({imin, _, _, _}), do: imin
 
+  @doc "Get the minimum j value."
   @spec jmin(S.bbox2i()) :: integer()
   def jmin({_, jmin, _, _}), do: jmin
 
+  @doc "Get the maximum i value."
   @spec imax(S.bbox2i()) :: integer()
   def imax({_, _, imax, _}), do: imax
 
+  @doc "Get the maximum j value."
   @spec jmax(S.bbox2i()) :: integer()
   def jmax({_, _, _, jmax}), do: jmax
 
@@ -69,11 +73,11 @@ defmodule Exa.Space.BBox2i do
   # public methods
   # --------------
 
-  @doc "Get the integral area of the bounding box."
+  @doc "Get the integer area of the bounding box."
   @spec area(S.bbox2i()) :: integer()
   def area({imin, jmin, imax, jmax}), do: (imax - imin + 1) * (jmax - jmin + 1)
 
-  @doc "Get the bounding box as point and width & height."
+  @doc "Get the bounding box as minimum point and width & height."
   @spec to_pos_dims(S.bbox2i()) :: {S.pos2i(), S.dim2()}
   def to_pos_dims({imin, jmin, imax, jmax}) do
     {{imin, jmin}, {imax - imin + 1, jmax - jmin + 1}}
