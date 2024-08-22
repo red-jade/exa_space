@@ -35,6 +35,11 @@ use tagged tuples to distinguish the various elements.
   - 2x2, 3x3, 4x4 square matrices
   - affine and homogeneous (projective) transforms
 
+## Building
+
+To bootstrap an `exa_xxx` library build, 
+you must run `mix deps.get` twice.
+
 ## EXA License
 
 EXA source code is released under the MIT license.

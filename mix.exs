@@ -32,33 +32,36 @@ defmodule Exa.Space.MixProject do
   end
 
   defp exa_libs() do
-    [  
-      :exa_core, 
-      :dialyxir, 
+    [
+      :exa_core,
+      :dialyxir,
       :ex_doc
     ]
   end
 
-  defp local_deps() do 
-    [
-    ]
+  defp local_deps() do
+    []
   end
 
   # ---------------------------
   # ***** EXA boilerplate *****
   # shared by all EXA libraries
   # ---------------------------
-  
+
   # main entry point for dependencies
-  defp exa_deps(name, libs), do: System.argv() |> hd() |> do_deps(name,libs)
+  # bootstrap with 'mix deps.get exa'
+  defp exa_deps(name, libs) do
+    case System.argv() do
+      ["exa" | _] -> [exa_project()]
+      ["format" | _] -> [exa_project()]
+      ["deps.get", "exa" | _] -> [exa_project()]
+      ["deps.clean" | _] -> do_clean()
+      [cmd | _] -> do_deps(cmd, name, libs)
+    end
+  end
 
-  defp do_deps("exa", _name, _libs), do: [exa_project()]
-
-  defp do_deps("deps.clean", _name, _libs) do
-    Enum.each([:local, :main, :tag], fn scope ->
-      scope |> deps_file() |> File.rm()
-    end)
-
+  defp do_clean() do
+    Enum.each([:local, :main, :tag], fn s -> s |> deps_file() |> File.rm() end)
     [exa_project()]
   end
 
@@ -69,24 +72,26 @@ defmodule Exa.Space.MixProject do
     if not File.exists?(deps_path) do
       # invoke the exa project mix task to generate dependencies
       exa_args = Enum.map([:exa, scope | libs], &to_string/1)
-      
-      case System.cmd("mix", exa_args) do
-        {_out, 0} -> :ok
-        {out, n} -> args = Enum.join(exa_args, " ")
-        raise RuntimeError, message: "Failed 'mix #{args}' status #{n} '#{out}'"
-      end
 
-      if not File.exists?(deps_path) do
-        raise RuntimeError, message: "Cannot create dependency file: #{deps_path}"
+      case System.cmd("mix", exa_args) do
+        {_msg, 0} -> :ok
+        {_, _} -> IO.puts("Failed 'mix exa' dependency task")
       end
     end
 
-    deps = deps_path |> Code.eval_file() |> elem(0)
+    deps =
+      if File.exists?(deps_path) do
+        deps_path |> Code.eval_file() |> elem(0)
+      else
+        IO.puts("No exa dependency file: #{deps_path}")
+        []
+      end
 
-    if String.starts_with?(cmd, ["deps", "compile"]) do
+    if deps != [] and String.starts_with?(cmd, ["deps", "compile"]) do
       IO.inspect(deps, label: "#{name} #{scope}")
     end
-    [exa_project()|deps]
+
+    [exa_project() | deps]
   end
 
   # the deps literal file to be written for each scope
@@ -97,13 +102,14 @@ defmodule Exa.Space.MixProject do
   # - MIX_BUILD system environment variable
   # - default to "tag"
   defp arg_build() do
-    default = case System.fetch_env("MIX_BUILD") do
-      :error -> "tag"
-      {:ok, mix_build} -> mix_build
-    end
+    default =
+      case System.fetch_env("MIX_BUILD") do
+        :error -> "tag"
+        {:ok, mix_build} -> mix_build
+      end
 
-    System.argv() 
-    |> tl() 
+    System.argv()
+    |> tl()
     |> OptionParser.parse(strict: [build: :string])
     |> elem(0)
     |> Keyword.get(:build, default)
@@ -115,9 +121,9 @@ defmodule Exa.Space.MixProject do
   defp exa_project() do
     {
       :exa,
-      git: "https://github.com/red-jade/exa.git", 
+      git: "https://github.com/red-jade/exa.git",
       branch: "main",
-      only: [:dev, :test], 
+      only: [:dev, :test],
       runtime: false
     }
   end

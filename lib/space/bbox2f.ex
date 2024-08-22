@@ -150,7 +150,7 @@ defmodule Exa.Space.BBox2f do
   def intersect({xmin1, ymin1, xmax1, ymax1}, {xmin2, ymin2, xmax2, ymax2}, eps \\ @epsilon) do
     new(max(xmin1, xmin2), max(ymin1, ymin2), min(xmax1, xmax2), min(ymax1, ymax2), eps)
   end
-  
+
   @doc "Test the relation of a point to the bounding box."
   @spec classify(S.bbox2f(), S.pos2f(), E.epsilon()) :: S.in_shape2d()
   def classify({xmin, ymin, xmax, ymax}, {x, y}, eps \\ @epsilon) when is_eps(eps) do
