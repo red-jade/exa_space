@@ -1,4 +1,4 @@
-## EXA Space
+# EXA Space
 
 𝔼𝕏tr𝔸 𝔼li𝕏ir 𝔸dditions (𝔼𝕏𝔸)
 
@@ -8,7 +8,7 @@ Utilities for spatials types: positions, vectors, bounding boxes, transforms.
 
 Module path: `Exa.Space`
 
-### Naming Convention
+## Naming Convention
 
 Modules are named with:
 - digit for the spatial dimension: 1, 2, 3, 4
@@ -16,7 +16,7 @@ Modules are named with:
 
 For example, `pos2i` is a 2D position coordinate on an integr grid.
 
-### Design
+## Design
 
 The design prefers plain (untagged) tuples
 for compact size and efficient O(1) access time (contiguous in memory).
@@ -26,7 +26,7 @@ Positions, vectors, bounding boxes and matrix transforms use tuples.
 Generalized transforms (translate, rotate, scale, full matrix)
 use tagged tuples to distinguish the various elements.
 
-### Features
+## Features
 
 - Positions: 2i,3i, 2f,3f
 - Vectors: 2i, 2f,3f,4f
@@ -35,7 +35,7 @@ use tagged tuples to distinguish the various elements.
   - 2x2, 3x3, 4x4 square matrices
   - affine and homogeneous (projective) transforms
 
-### License
+## EXA License
 
 EXA source code is released under the MIT license.
 
