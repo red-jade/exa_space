@@ -71,15 +71,15 @@ defmodule Exa.Space.Vec3f do
   @doc "Test a 3D vector to be equal zero (within tolerance)."
   @spec zero?(S.vec3f(), E.epsilon()) :: bool()
   def zero?(v, eps \\ @epsilon)
-  def zero?({0.0, 0.0, 0.0}, _eps), do: true
+  def zero?({zero, zero, zero}, _eps) when zero == 0.0, do: true
   def zero?(v, eps) when is_vec3f(v) and is_eps(eps), do: len(v) < eps
 
   @doc "Test a 3D vector to have unit length (within tolerance)."
   @spec unit?(S.vec3f(), E.epsilon()) :: bool()
   def unit?(v, e \\ @epsilon)
-  def unit?({1.0, 0.0, 0.0}, _eps), do: true
-  def unit?({0.0, 1.0, 0.0}, _eps), do: true
-  def unit?({0.0, 0.0, 1.0}, _eps), do: true
+  def unit?({1.0, zero, zero}, _eps) when zero == 0.0, do: true
+  def unit?({zero, 1.0, zero}, _eps) when zero == 0.0, do: true
+  def unit?({zero, zero, 1.0}, _eps) when zero == 0.0, do: true
   def unit?(v, eps) when is_vec3f(v) and is_eps(eps), do: Math.equals?(len(v), 1.0, eps)
 
   @doc "Compare two vectors for equality (within tolerance)."

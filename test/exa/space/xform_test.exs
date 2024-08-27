@@ -30,7 +30,7 @@ defmodule Exa.Space.XformTest do
     assert 2.0 = det(i3)
 
     inv3 = inv(i3)
-    assert {9.0, -0.5, -7.5, -10.0, 1.0, 8.0, -1.0, -0.0, 1.0} = inv3
+    assert {9.0, -0.5, -7.5, -10.0, 1.0, 8.0, -1.0, 0.0, 1.0} == inv3
 
     prod3 = multiply(inv3, i3)
     assert equals?(:iden33, prod3)
@@ -39,7 +39,7 @@ defmodule Exa.Space.XformTest do
   test "apply 2x2" do
     m22 = new22(2, 1, 7, 4)
     v2 = Vec2f.new(1, -2)
-    assert {0.0, -1.0} = xform(m22, v2)
+    assert {0.0, -1.0} == xform(m22, v2)
   end
 
   test "apply 3x3" do

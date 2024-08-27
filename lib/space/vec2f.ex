@@ -59,14 +59,14 @@ defmodule Exa.Space.Vec2f do
   @doc "Test for a vector to be zero (within tolerance)."
   @spec zero?(S.vec2f(), E.epsilon()) :: bool()
   def zero?(v, eps \\ @epsilon)
-  def zero?({0.0, 0.0}, _eps), do: true
+  def zero?({zero, zero}, _eps) when zero == 0.0, do: true
   def zero?(v, eps) when is_vec2f(v) and is_eps(eps), do: len(v) < eps
 
   @doc "Test for a vector to be a unit vector, length 1.0 (within tolerance)."
   @spec unit?(S.vec2f(), E.epsilon()) :: bool()
   def unit?(v, e \\ @epsilon)
-  def unit?({1.0, 0.0}, _eps), do: true
-  def unit?({0.0, 1.0}, _eps), do: true
+  def unit?({1.0, zero}, _eps) when zero == 0.0, do: true
+  def unit?({zero, 1.0}, _eps) when zero == 0.0, do: true
   def unit?(v, eps) when is_vec2f(v) and is_eps(eps), do: Math.equals?(len(v), 1.0, eps)
 
   @doc "Test two vectors for equality (within tolerance)."
