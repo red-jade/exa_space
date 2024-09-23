@@ -101,7 +101,7 @@ defmodule Exa.Space.Types do
   @typedoc "2D position with integer coordinates."
   @type pos2i() :: {integer(), integer()}
   defguard is_pos2i(p)
-           when is_fix_tuple(p, 2) and
+           when is_tuple_fix(p, 2) and
                   is_integer(elem(p, 0)) and is_integer(elem(p, 1))
 
   @typedoc "List of 2D integer coordinates."
@@ -111,7 +111,7 @@ defmodule Exa.Space.Types do
   @typedoc "List of 3D integer coordinates."
   @type pos3i() :: {integer(), integer(), integer()}
   defguard is_pos3i(p)
-           when is_fix_tuple(p, 3) and
+           when is_tuple_fix(p, 3) and
                   is_integer(elem(p, 0)) and is_integer(elem(p, 1)) and is_integer(elem(p, 2))
 
   @typedoc "3D position with integer coordinates."
@@ -121,7 +121,7 @@ defmodule Exa.Space.Types do
   @typedoc "2D position with float coordinates."
   @type pos2f() :: {float(), float()}
   defguard is_pos2f(p)
-           when is_fix_tuple(p, 2) and
+           when is_tuple_fix(p, 2) and
                   is_float(elem(p, 0)) and is_float(elem(p, 1))
 
   @typedoc "List of 2D float coordinates."
@@ -131,7 +131,7 @@ defmodule Exa.Space.Types do
   @typedoc "3D position with float coordinates."
   @type pos3f() :: {float(), float(), float()}
   defguard is_pos3f(v)
-           when is_fix_tuple(v, 3) and
+           when is_tuple_fix(v, 3) and
                   is_float(elem(v, 0)) and is_float(elem(v, 1)) and is_float(elem(v, 2))
 
   @typedoc "List of 3D float coordinates."
@@ -141,7 +141,7 @@ defmodule Exa.Space.Types do
   @typedoc "4D position with float coordinates."
   @type pos4f() :: {float(), float(), float(), float()}
   defguard is_pos4f(v)
-           when is_fix_tuple(v, 4) and
+           when is_tuple_fix(v, 4) and
                   is_float(elem(v, 0)) and is_float(elem(v, 1)) and
                   is_float(elem(v, 2)) and is_float(elem(v, 3))
 
@@ -152,25 +152,25 @@ defmodule Exa.Space.Types do
   @typedoc "2D vector with integer components."
   @type vec2i() :: {integer(), integer()}
   defguard is_vec2i(v)
-           when is_fix_tuple(v, 2) and
+           when is_tuple_fix(v, 2) and
                   is_integer(elem(v, 0)) and is_integer(elem(v, 1))
 
   @typedoc "2D vector with float components."
   @type vec2f() :: {float(), float()}
   defguard is_vec2f(v)
-           when is_fix_tuple(v, 2) and
+           when is_tuple_fix(v, 2) and
                   is_float(elem(v, 0)) and is_float(elem(v, 1))
 
   @typedoc "3D vector with float components."
   @type vec3f() :: {float(), float(), float()}
   defguard is_vec3f(v)
-           when is_fix_tuple(v, 3) and
+           when is_tuple_fix(v, 3) and
                   is_float(elem(v, 0)) and is_float(elem(v, 1)) and is_float(elem(v, 2))
 
   @typedoc "4D vector with float components."
   @type vec4f() :: {float(), float(), float(), float()}
   defguard is_vec4f(v)
-           when is_fix_tuple(v, 4) and
+           when is_tuple_fix(v, 4) and
                   is_float(elem(v, 0)) and is_float(elem(v, 1)) and
                   is_float(elem(v, 2)) and is_float(elem(v, 3))
 
@@ -181,14 +181,14 @@ defmodule Exa.Space.Types do
   @typedoc "1D bounding box with integer components."
   @type bbox1i() :: {integer(), integer()}
   defguard is_bbox1i(v)
-           when is_fix_tuple(v, 2) and
+           when is_tuple_fix(v, 2) and
                   is_integer(elem(v, 0)) and is_integer(elem(v, 1)) and
                   elem(v, 0) <= elem(v, 1)
 
   @typedoc "2D bounding box with integer components."
   @type bbox2i() :: {integer(), integer(), integer(), integer()}
   defguard is_bbox2i(v)
-           when is_fix_tuple(v, 4) and
+           when is_tuple_fix(v, 4) and
                   is_integer(elem(v, 0)) and is_integer(elem(v, 1)) and
                   is_integer(elem(v, 2)) and is_integer(elem(v, 3)) and
                   elem(v, 0) <= elem(v, 2) and
@@ -197,7 +197,7 @@ defmodule Exa.Space.Types do
   @typedoc "3D bounding box with integer components."
   @type bbox3i() :: {integer(), integer(), integer(), integer(), integer(), integer()}
   defguard is_bbox3i(v)
-           when is_fix_tuple(v, 6) and
+           when is_tuple_fix(v, 6) and
                   is_integer(elem(v, 0)) and is_integer(elem(v, 1)) and
                   is_integer(elem(v, 2)) and is_integer(elem(v, 3)) and
                   is_integer(elem(v, 4)) and is_integer(elem(v, 5)) and
@@ -208,7 +208,7 @@ defmodule Exa.Space.Types do
   @typedoc "2D bounding box with float components."
   @type bbox2f() :: {float(), float(), float(), float()}
   defguard is_bbox2f(v)
-           when is_fix_tuple(v, 4) and
+           when is_tuple_fix(v, 4) and
                   is_float(elem(v, 0)) and is_float(elem(v, 1)) and
                   is_float(elem(v, 2)) and is_float(elem(v, 3)) and
                   elem(v, 0) < elem(v, 2) and elem(v, 1) < elem(v, 3)
@@ -220,7 +220,7 @@ defmodule Exa.Space.Types do
   @typedoc "A 2x2 array of values in row-major order."
   @type mat22() :: :iden22 | {float(), float(), float(), float()}
 
-  defguard is_mat22(m) when m == :iden22 or is_fix_tuple(m, 4)
+  defguard is_mat22(m) when m == :iden22 or is_tuple_fix(m, 4)
 
   @typedoc "A 3x3 array of values in row-major order."
   @type mat33() ::
@@ -237,7 +237,7 @@ defmodule Exa.Space.Types do
               float()
             }
 
-  defguard is_mat33(m) when m == :iden33 or is_fix_tuple(m, 9)
+  defguard is_mat33(m) when m == :iden33 or is_tuple_fix(m, 9)
 
   @typedoc "A 4x4 array of values in row-major order."
   @type mat44() ::
@@ -261,7 +261,7 @@ defmodule Exa.Space.Types do
               float()
             }
 
-  defguard is_mat44(m) when m == :iden44 or is_fix_tuple(m, 16)
+  defguard is_mat44(m) when m == :iden44 or is_tuple_fix(m, 16)
 
   @typedoc "A general type for all square matrices."
   @type matrix() :: mat22() | mat33() | mat44()
