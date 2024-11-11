@@ -58,7 +58,7 @@ defmodule Exa.Space.BBox2f do
 
   @doc "Get the bounding box of center point and width & height."
   @spec from_center_dims(S.pos2f(), {E.pos_float(), E.pos_float()}) :: S.bbox2f()
-  def from_center_dims({cx, cy}, {w, h}) when is_pos_float(w) and is_pos_float(h) do
+  def from_center_dims({cx, cy}, {w, h}) when is_float_pos(w) and is_float_pos(h) do
     w2 = 0.5 * w
     h2 = 0.5 * h
     {cx - w2, cy - h2, cx + w2, cy + h2}
