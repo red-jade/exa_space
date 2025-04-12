@@ -3,7 +3,7 @@ defmodule Exa.Space.MixProject do
 
   @lib :exa_space
   @name "Exa Space"
-  @ver "0.3.2"
+  @ver "0.3.3"
 
   def project do
     [
